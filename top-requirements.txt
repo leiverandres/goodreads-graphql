@@ -1,0 +1,7 @@
+Flask
+Flask-GraphQL
+graphene-mongo
+pandas
+pymongo
+mimesis
+progress
