@@ -1,0 +1,48 @@
+type Book {
+  bookId: ID!
+  workId: Int
+  title: String!
+  originalTitle: String
+  isbn: String!
+  isbn13: Int
+  authors: [String]
+  publicationYear: Int
+  languageCode: String
+  avgRating: Float
+  ratingsCount: Int
+  workRatingsCount: Int
+  workTextReviewsCount: Int
+  ratings1: Int
+  ratings2: Int
+  ratings3: Int
+  ratings4: Int
+  ratings5: Int
+  coverURL: String
+  smallCoverURL: String
+  description: String
+  reviews: [Review]!
+}
+
+type Review {
+  _id: ID!
+  bookId: ID!
+  rate: Float!
+  text: String
+  likes: Int
+}
+
+type Query {
+  books(pageSize: Int, page: Int): [Book]
+  book(bookId: ID): Book
+  reviews: [Review]
+}
+
+type Mutation {
+  createReview(
+    bookId: ID!
+    username: String!
+    rate: Float!
+    text: String!
+  ): Review!
+  likeReview(id: ID): Review
+}

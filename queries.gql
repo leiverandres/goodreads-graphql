@@ -1,3 +1,6 @@
+# This file contains several query and mutation examples
+# fot the API created in this repo
+
 {
   books {
     smallCoverURL
@@ -7,8 +10,6 @@
   }
 }
 
-###
-
 {
   books(pageSize: 10, page: 1) {
     smallCoverURL
@@ -17,8 +18,6 @@
     avgRating
   }
 }
-
-###
 
 {
   book(bookId: 2767052) {
@@ -32,25 +31,36 @@
   }
 }
 
-###
-
 {
   reviews {
     Id
     bookId
-     rate
+    rate
   }
 }
 
-###
-
 mutation {
-  createReview(bookId: 7613, rate: 4.5, text: "really good book", username: "leiverandres") {
+  createReview(
+    bookId: 7613
+    rate: 4.5
+    text: "really good book"
+    username: "leiverandres"
+  ) {
     state
     review {
       Id
       rate
       likes
+    }
+  }
+}
+
+mutation {
+  likeReview(id: "5baefa7e3387f566b34bc701") {
+    review {
+      likes
+      rate
+      Id
     }
   }
 }
