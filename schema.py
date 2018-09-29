@@ -1,5 +1,6 @@
 import graphene
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 from basic_types import Book, Review
 
 client = MongoClient()
@@ -36,6 +37,22 @@ class CreateReview(graphene.Mutation):
             return {'state': 'Something went wrong on serverside'}
 
 
+class LikeReview(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID()
+
+    review = graphene.Field(Review)
+
+    def mutate(self, info, id):
+        reviews_collection.update_one({
+            '_id': ObjectId(id)
+        }, {'$inc': {
+            'likes': 1
+        }})
+        review = reviews_collection.find_one(ObjectId(id))
+        return LikeReview(review=review)
+
+
 class Query(graphene.ObjectType):
     books = graphene.List(Book, pageSize=graphene.Int(), page=graphene.Int())
     book = graphene.Field(Book, bookId=graphene.ID(required=True))
@@ -65,7 +82,7 @@ class Query(graphene.ObjectType):
 
 class Mutations(graphene.ObjectType):
     create_review = CreateReview.Field()
-    # like_review = LikeReview.Field()
+    like_review = LikeReview.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
