@@ -1,0 +1,56 @@
+{
+  books {
+    smallCoverURL
+    title
+    authors
+    avgRating
+  }
+}
+
+###
+
+{
+  books(pageSize: 10, page: 1) {
+    smallCoverURL
+    title
+    authors
+    avgRating
+  }
+}
+
+###
+
+{
+  book(bookId: 2767052) {
+    bookId
+    coverURL
+    Description
+    title
+    authors
+    avgRating
+    ratingsCount
+  }
+}
+
+###
+
+{
+  reviews {
+    Id
+    bookId
+     rate
+  }
+}
+
+###
+
+mutation {
+  createReview(bookId: 7613, rate: 4.5, text: "really good book", username: "leiverandres") {
+    state
+    review {
+      Id
+      rate
+      likes
+    }
+  }
+}
